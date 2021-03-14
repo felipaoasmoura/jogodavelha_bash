@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 '''
 Program: Jogo da Velha
@@ -11,14 +12,14 @@ declare -r X="X";
 
 clear;
 
-echo '';
-echo '   |   |   ';
-echo '---+---+---';
-echo '   |   |   ';
-echo '---+---+---';
-echo '   |   |   ';
-echo '';
+echo "";
+echo "   |   |   ";
+echo "---+---+---";
+echo "   |   |   ";
+echo "---+---+---";
+echo "   |   |   ";
+echo "";
 
-read -p 'Qual casa você quer o "X" ' x;
-echo '';
-read -p 'Qual casa quer o "O" ' o;
+read -p "Qual casa você quer o "X" " x;
+echo "";
+read -p "Qual casa quer o "O" " o;
