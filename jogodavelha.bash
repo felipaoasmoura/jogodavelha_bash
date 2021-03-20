@@ -1,5 +1,5 @@
 #!/bin/bash
-#set -x
+set -x
 set -o errexit   # abort on nonzero exitstatus
 set -o nounset   # abort on unbound variable
 set -o pipefail  # don't hide errors within pipes
@@ -28,28 +28,32 @@ azul='\033[34m';
 campeao='\033[5;33m';
 
 function verifica_vencedor() {
+
   contador=$(( $contador + 1 ));
-  if [[ $a1 != " " && $a1 == $a2 && $a3 == $a1 ]];
+
+  for linha in a b c;
+  do
+    casa1=${linha}1;
+    casa2=${linha}2;
+    casa3=${linha}3;
+  if [[ ${!casa1} != " " && ${!casa1} == ${!casa2} && ${!casa3} == ${!casa1} ]];
   then
-    vencedor="Parabéns, jogador $a1";
-    a1=$campeao$a1$padrao
-    a2=$campeao$a2$padrao
-    a3=$campeao$a3$padrao
+    vencedor="Parabéns, jogador ${!casa1}";
+    pisca="$(echo $campeao${!casa1}$padrao)"
+    eval "$casa1='${pisca}'";
+    eval "$casa2='${pisca}'";
+    eval "$casa2='${pisca}'";
+    #eval "$casa1=$campeao${casa1}$padrao";
+    #eval "$casa2=$campeao${casa2}$padrao";
+    #eval "$casa3=$campeao${casa3}$padrao";
+        #a1=$campeao$a1$padrao
+    #a2=$campeao$a2$padrao
+    #a3=$campeao$a3$padrao
   fi
-  if [[ $b1 != " " && $b1 == $b2 && $b3 == $b1 ]];
-  then
-    vencedor="Parabéns, jogador $b1";
-    b1=$campeao$b1$padrao
-    b2=$campeao$b2$padrao
-    b3=$campeao$b3$padrao
-  fi
-  if [[ $c1 != " " && $c1 == $c2 && $c3 == $c1 ]];
-  then
-    vencedor="Parabéns, jogador $c1";
-    c1=$campeao$c1$padrao
-    c2=$campeao$c2$padrao
-    c3=$campeao$c3$padrao
-  fi
+done
+
+
+
   if [[ $a1 != " " && $a1 == $b1 && $c1 == $a1 ]];
   then
     vencedor="Parabéns, jogador $a1";
