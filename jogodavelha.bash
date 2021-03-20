@@ -1,8 +1,8 @@
 #!/bin/bash
-set -x
-set -o errexit   # abort on nonzero exitstatus
-set -o nounset   # abort on unbound variable
-set -o pipefail  # don't hide errors within pipes
+#set -x
+#set -o errexit   # abort on nonzero exitstatus
+#set -o nounset   # abort on unbound variable
+#set -o pipefail  # don't hide errors within pipes
 #```
 #Program: Jogo da Velha
 #Author: Felipe Augusto de Souza Moura
