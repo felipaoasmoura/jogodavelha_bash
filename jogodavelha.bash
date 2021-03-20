@@ -42,7 +42,7 @@ function verifica_vencedor() {
     pisca="$(echo $campeao${!casa1}$padrao)"
     eval "$casa1='${pisca}'";
     eval "$casa2='${pisca}'";
-    eval "$casa2='${pisca}'";
+    eval "$casa3='${pisca}'";
     #eval "$casa1=$campeao${casa1}$padrao";
     #eval "$casa2=$campeao${casa2}$padrao";
     #eval "$casa3=$campeao${casa3}$padrao";
