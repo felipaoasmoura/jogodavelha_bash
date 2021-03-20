@@ -36,23 +36,18 @@ function verifica_vencedor() {
     casa1=${linha}1;
     casa2=${linha}2;
     casa3=${linha}3;
-  if [[ ${!casa1} != " " && ${!casa1} == ${!casa2} && ${!casa3} == ${!casa1} ]];
-  then
-    vencedor="Parabéns, jogador ${!casa1}";
-    pisca="$(echo $campeao${!casa1}$padrao)"
-    eval "$casa1='${pisca}'";
-    eval "$casa2='${pisca}'";
-    eval "$casa3='${pisca}'";
-    #eval "$casa1=$campeao${casa1}$padrao";
-    #eval "$casa2=$campeao${casa2}$padrao";
-    #eval "$casa3=$campeao${casa3}$padrao";
-        #a1=$campeao$a1$padrao
-    #a2=$campeao$a2$padrao
-    #a3=$campeao$a3$padrao
-  fi
-done
+    if [[ ${!casa1} != " " && ${!casa1} == ${!casa2} && ${!casa3} == ${!casa1} ]];
+    then
+      vencedor="Parabéns, jogador ${!casa1}";
+      pisca="$(echo $campeao${!casa1}$padrao)"
 
-
+      for ((i=1;i<=3;i++));
+      do
+        casa=${linha}${i};
+        eval "$casa='${pisca}'";
+      done
+    fi
+  done
 
   if [[ $a1 != " " && $a1 == $b1 && $c1 == $a1 ]];
   then
