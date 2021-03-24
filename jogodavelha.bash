@@ -1,12 +1,16 @@
 #!/bin/bash
+#
+#
 #set -x
 #set -o errexit   # abort on nonzero exitstatus
 #set -o nounset   # abort on unbound variable
 #set -o pipefail  # don't hide errors within pipes
+#
 #```
 #Program: Jogo da Velha
 #Author: Felipe Augusto de Souza Moura
-#Created at: 2021/03/10
+#Version: 1.0
+#Created at: 2021/03/24
 #```
 declare -r O="O";
 declare -r X="X";
@@ -31,56 +35,25 @@ function verifica_vencedor() {
   contador=$(( $contador + 1 ));
   for linha in a b c;
   do
-: '
-    ## Felipe, faça uma repetição de 1 até 3
-    ## Vamos apreder sobre array (vetor)
-    ## Para cada volta
-    ##  vamos inserir no array "casa",
-    ##  na posição i,
-    ##  O valor do conteúdo da variável "linha",
-    ##  concatenado com o conteúdo de i;
-    ## Ex:
-    ## Para cada "coluna" de 1 até 3 incrementando em 1
-    ## faça:
-    ##   casa[i] <-- linha + coluna
-    ## fim para
-    Troque as referencias
-      "casa1" por "casa[1]"
-      "casa2" por "casa[2]"
-      "casa3" por "casa[3]"
-'
-    casa1=${linha}1;
-    casa2=${linha}2;
-    casa3=${linha}3;
+
+
+    for (( i=1; i<=3; i++ ));
+    do
+      casa[i]=${linha}${i};
+    done
     ###########
-    if [[ ${!casa1} != " " && ${!casa1} == ${!casa2} && ${!casa3} == ${!casa1} ]];
+    if [[ ${!casa[1]} != " " && ${!casa[1]} == ${!casa[2]} && ${!casa[3]} == ${!casa[1]} ]];
     then
-      vencedor="Parabéns, jogador ${!casa1}";
-      pisca="$(echo $campeao${!casa1}$padrao)"
+      vencedor="Parabéns, jogador ${!casa[1]}";
+      pisca="$(echo $campeao${!casa[1]}$padrao)"
       for ((i=1;i<=3;i++));
       do
         casa=${linha}${i};
-        eval "$casa='${pisca}'";
+        eval "${casa[i]}='${pisca}'";
       done
     fi
   done
 
-:'
-  Felipe, faça um loop de 1 até 3 incrementando 1;
-  Para coluna de 1 até 3; faça
-     Para cada linha em "a" "b" "c"
-     Faça
-        casa[linha] <-- linha + coluna
-     Fim para
-     Atribua o valor
-     Troque as referenicias
-        a1 por casa[1]
-        b1 por casa[2]
-        c1 por casa[3]
-     Teste se há vencedores
-     Repita o for já efecutado no
-        no teste de vencedor horizontal
-'
   if [[ $a1 != " " && $a1 == $b1 && $c1 == $a1 ]];
   then
     vencedor="Parabéns, jogador $a1";
@@ -122,6 +95,12 @@ function verifica_vencedor() {
 
 function desenha_tabulero() {
   clear;
+  azul='\e[1;44m';
+  normal='\e[0m';
+  echo "";
+  echo "";
+  echo -e "  ${azul} Jogo da Velha ${normal}";
+  echo "";
   echo "     1   2   3";
   echo "";
   echo -e " a   $a1 | $a2 | $a3 ";
@@ -141,6 +120,8 @@ do
       do
          read -p "Qual casa você quer o 'X' " x;
          x=${x,,};
+         valido="$( echo ${x} | grep -E '^[a-c][1-3]$' )";
+         [[ -z ${valido} ]] && continue;
          livre="$(echo ${!x} | tr -d '\ ')";
          ## Felipe, inclua o teste abaixo
          ## se $x não pertence a  ( "a1" "b1" "c1" "a2" ... )
@@ -158,6 +139,8 @@ do
       do
          read -p "Qual casa quer o 'O' " o;
          o=${o,,};
+         valido="$( echo ${o} | grep -E '^[a-c][1-3]$' )";
+         [[ -z ${valido} ]] && continue;
          livre="$(echo ${!o} | tr -d '\ ')";
       done
       eval "$o=$O";
